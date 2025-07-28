@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+nlan 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%), radial-gradient(circle at 40% 40%, rgba(120, 255, 198, 0.1) 0%, transparent 50%), linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 25%, #2d2d2d 50%, #1a1a1a 75%, #0a0a0a 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .particles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: rgba(0, 31, 204, 0.15);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite;
+            box-shadow: 0 0 15px rgba(15, 69, 151, 0.3), 0 0 30px rgba(120, 119, 198, 0.2);
+        }
+        
+        .particle:nth-child(1) {
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .particle:nth-child(2) {
+            left: 20%;
+            animation-delay: 1s;
+        }
+        
+        .particle:nth-child(3) {
+            left: 30%;
+            animation-delay: 2s;
+        }
+        
+        .particle:nth-child(4) {
+            left: 40%;
+            animation-delay: 3s;
+        }
+        
+        .particle:nth-child(5) {
+            left: 50%;
+            animation-delay: 4s;
+        }
+        
+        .particle:nth-child(6) {
+            left: 60%;
+            animation-delay: 5s;
+        }
+        
+        .particle:nth-child(7) {
+            left: 70%;
+            animation-delay: 0.5s;
+        }
+        
+        .particle:nth-child(8) {
+            left: 80%;
+            animation-delay: 1.5s;
+        }
+        
+        .particle:nth-child(9) {
+            left: 90%;
+            animation-delay: 2.5s;
+        }
+        
+        .particle:nth-child(10) {
+            left: 95%;
+            animation-delay: 3.5s;
+        }
+        
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .mod-menu-container {
+            background: rgba(7, 17, 44, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 0;
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 255, 255, 0.05);
+            animation: slideIn 0.5s ease-out;
+            transform-origin: center;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8) translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        
+        .menu-header {
+            background: linear-gradient(135deg, #150f1d 0%, #151b3d 50%,#424c8a 50%,#151b3d 50%, #120a25 100%);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(12, 38, 87, 0.1);
+        }
+        
+        .menu-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(12, 34, 109, 0.1), transparent);
+            animation: shine 3s ease-in-out infinite;
+        }
+        
+        @keyframes shine {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .menu-header h1 {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1;
+            position: relative;
+        }
+        
+        .close-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1;
+            position: relative;
+        }
+        
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+        
+        .menu-content {
+            padding: 20px;
+            max-height: 60vh;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+        }
+        
+        .menu-content::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .menu-content::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        
+        .menu-content::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+        }
+        
+        .menu-content::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+        
+        .menu-section {
+            margin-bottom: 30px;
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        .menu-section:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+        
+        .menu-section:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .menu-section:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+        
+        .menu-section:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .menu-section h2 {
+            color: white;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .switches-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .switch-item {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .switch-item:hover {
+            background: rgba(0, 0, 0, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .switch-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        .switch-text {
+            color: white;
+            font-size: 1rem;
+            font-weight: 500;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        
+        .switch-container {
+            position: relative;
+            width: 60px;
+            height: 30px;
+        }
+        
+        .switch-input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+            position: absolute;
+        }
+        
+        .switch-slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .switch-slider::before {
+            content: '';
+            position: absolute;
+            height: 22px;
+            width: 22px;
+            left: 2px;
+            bottom: 2px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .switch-input:checked+.switch-slider {
+            background: linear-gradient(135deg, #1f97cf 0%, #0d99da 100%);
+            border-color: #1f97cf;
+            box-shadow: 0 0 15px rgba(76, 172, 175, 0.6), 0 0 25px rgba(76, 163, 175, 0.3);
+        }
+        
+        .switch-input:checked+.switch-slider::before {
+            transform: translateX(30px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .switch-input:checked+.switch-slider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 60px;
+            height: 60px;
+            background: rgba(0, 200, 81, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            animation: ripple 0.6s ease-out;
+        }
+        
+        @keyframes ripple {
+            to {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0;
+            }
+        }
+        
+        .menu-footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .reset-btn {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .reset-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(238, 90, 82, 0.4);
+        }
+        
+        .version-info {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        @media (max-width: 768px) {
+            .mod-menu-container {
+                width: 95%;
+                max-height: 95vh;
+            }
+            .menu-header h1 {
+                font-size: 1.5rem;
+            }
+            .switches-grid {
+                grid-template-columns: 1fr;
+            }
+            .switch-item {
+                padding: 12px;
+            }
+            .menu-content {
+                max-height: 65vh;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .menu-header {
+                padding: 15px;
+            }
+            .menu-content {
+                padding: 15px;
+            }
+            .menu-footer {
+                padding: 12px 15px;
+            }
+            .switch-text {
+                font-size: 0.9rem;
+            }
+        }
+        
+        .swal2-popup {
+            background: rgba(0, 0, 0, 0.9) !important;
+            backdrop-filter: blur(20px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            border-radius: 20px !important;
+            color: white !important;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8) !important;
+        }
+        
+        .swal2-title {
+            color: white !important;
+        }
+        
+        .swal2-input {
+            background: rgba(0, 0, 0, 0.5) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            border-radius: 10px !important;
+            color: white !important;
+        }
+        
+        .swal2-input::placeholder {
+            color: rgba(255, 255, 255, 0.6) !important;
+        }
+        
+        .swal2-confirm {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%) !important;
+            border: none !important;
+            border-radius: 10px !important;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3) !important;
+        }
+        
+        .swal2-cancel {
+            background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%) !important;
+            border: none !important;
+            border-radius: 10px !important;
+            box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3) !important;
+        }
+        
+        .mod-menu-container.hidden {
+            display: none;
+        }
+        
+        .loading {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="particles-container">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <div class="mod-menu-container" id="modMenu">
+        <div class="menu-header">
+            <h1><i class="fas fa-dragon"></i> Panel Ngvanh </h1>
+            <button class="close-btn" id="closeBtn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="menu-content">
+            <div class="menu-section">
+                <h2><i class="fas fa-gamepad"></i> Function MOD</h2>
+                <div class="switches-grid">
+                    <div class="switch-item">
+                        <label class="switch-label">
+                            <span class="switch-text">AIMLOCK</span>
+                            <div class="switch-container">
+                                <input type="checkbox" class="switch-input" id="godMode">
+                                <div class="switch-slider"></div>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="switch-item">
+                        <label class="switch-label">
+                            <span class="switch-text">AIMBOT</span>
+                            <div class="switch-container">
+                                <input type="checkbox" class="switch-input" id="infiniteAmmo">
+                                <div class="switch-slider"></div>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="switch-item">
+                        <label class="switch-label">
+                            <span class="switch-text">Nhẹ Tâm</span>
+                            <div class="switch-container">
+                                <input type="checkbox" class="switch-input" id="speedBoost">
+                                <div class="switch-slider"></div>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="switch-item">
+                        <label class="switch-label">
+                            <span class="switch-text">AUTO HEADSHOT</span>
+                            <div class="switch-container">
+                                <input type="checkbox" class="switch-input" id="noClip">
+                                <div class="switch-slider"></div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-section">
+                <h2><i class="fas fa-eye"></i>OPTIONS 1:</h2>
+                <div class="switches-grid">
+                    <div class="switch-item">
+                        <label class="switch-label">
+                            <span class="switch-text">No Reload</span>
+                            <div class="switch-container">
+                                <input type="checkbox" class="switch-input" id="espPlayers">
+                                <div class="switch-slider"></div>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="switch-item">
+                        <label class="switch-label">
+                            <span class="switch-text">Fast Reload </span>
+                            <div class="switch-container">
+                                <input type="checkbox" class="switch-input" id="wallhack">
+                                <div class="switch-slider"></div>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="switch-item">
+                        <label class="switch-label">
+                            <span class="switch-text">No Recoil</span>
+                            <div class="switch-container">
+                                <input type="checkbox" class="switch-input" id="aimbot">
+                                <div class="switch-slider"></div>
+                            </div>
+                        </label>
+                    </div>
+                   
+                </div>
+            </div>
+     =
+            <div class="menu-section">
+                <h2><i class="fas fa-cogs"></i>OPTIONS 2: </h2>
+                <div class="switches-grid">
+                    <div class="switch-item">
+                        <label class="switch-label">
+                            <span class="switch-text">BUFF FPS</span>
+                            <div class="switch-container">
+                                <input type="checkbox" class="switch-input" id="fpsCounter">
+                                <div class="switch-slider"></div>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="switch-item">
+                        <label class="switch-label">
+                            <span class="switch-text">BUFF DAMAGE</span>
+                            <div class="switch-container">
+                                <input type="checkbox" class="switch-input" id="performanceMode">
+                                <div class="switch-slider"></div>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="switch-item">
+                        <label class="switch-label">
+                            <span class="switch-text">MOD SKIN</span>
+                            <div class="switch-container">
+                                <input type="checkbox" class="switch-input" id="antiDetect">
+                                <div class="switch-slider"></div>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="switch-item">
+                        <label class="switch-label">
+                            <span class="switch-text">ANTIBAND</span>
+                            <div class="switch-container">
+                                <input type="checkbox" class="switch-input" id="autoSave">
+                                <div class="switch-slider"></div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="menu-footer">
+            <button class="reset-btn" id="resetBtn">
+                <i class="fas fa-refresh"></i> Reset All
+            </button>
+            <div class="version-info">Ngvanh</div>
+        </div>
+    </div>
+
+    <script>
+        eval(function(p, a, c, k, e, d) {
+            e = function(c) {
+                return (c < a ? '' : e(parseInt(c / a))) + ((c = c % a) > 35 ? String.fromCharCode(c + 29) : c.toString(36))
+            };
+            if (!''.replace(/^/, String)) {
+                while (c--) {
+                    d[e(c)] = k[c] || e(c)
+                }
+                k = [function(e) {
+                    return d[e]
+                }];
+                e = function() {
+                    return '\\w+'
+                };
+                c = 1
+            };
+            while (c--) {
+                if (k[c]) {
+                    p = p.replace(new RegExp('\\b' + e(c) + '\\b', 'g'), k[c])
+                }
+            }
+            return p
+        }('2l 1z{4f(){6.K=\'4e\';6.Y=d;6.c={};6.1j=\'4d\';6.2m()}2m(){b.I(\'1g\').1b.1L(\'1a\');6.X();6.2c();6.1R()}X(){E.D({A:\'4c 4b 4a\',49:`<2i 9="r-48: 47; 1r-2k: 46;"><i 2l="45 44-43"9="42-W: 41; 2j: #40; 1r-2k: 3Z;"></i><p 9="2j: 3Y(1s, 1s, 1s, 0.8); 1r: 0;">Đă17 1pập vào l hãy 1pập mật 3Xẩu</p></2i>`,Q:\'K\',3W:\'3V K...\',14:z,13:\'Đă17 2gập\',12:\'1X\',3U:d,3T:d,3S:(U)=>{f(!U){1q\'3R 3Q 3P!\'}f(U!==6.K){1q\'3O K!\'}1q 3N}}).11((q)=>{f(q.Z){6.Y=z;6.2d();6.2h()}2e{6.2f()}})}2h(){E.D({A:\'Đă17 2gập 3Mà1p Cô17\',r:\'Đăng Nhập Thành Công - Nlan\',J:\'1n\',1m:1S,1l:d,22:z,21:\'20-1Z\'})}2f(){E.D({A:\'3J 3I\',r:\'3H 3G 3F 3E K 1F 3D 6 l\',J:\'3C\',13:\'3B 3A\',12:\'3z\',14:z}).11((q)=>{f(q.Z){6.X()}2e{18.3y()}})}2d(){7 l=b.I(\'1g\');l.1b.3x(\'1a\');l.9.P=\'3w 0.1f 1e-1d\';6.1J()}2c(){b.I(\'3v\').x(\'2b\',()=>{6.1h()});b.I(\'3u\').x(\'2b\',()=>{6.1Y()});7 c=b.R(\'.F-Q\');c.L(a=>{a.x(\'1u\',(e)=>{6.2a(e.3t)})});b.x(\'3s\',(e)=>{f(e.3r===\'3q\'&&6.Y){6.1h()}})}2a(a){7 g=a.1V;7 w=a.1i;6.c[g]=w;6.1k();6.28(g,w);6.29(a);3p.3o(`${g}${w?\'24\':\'23\'}`)}29(a){7 16=a.27(\'.F-3n\');16.9.P=\'3m\';1c(()=>{16.9.P=\'3l 0.1f 1e-3k-1d\'},10);1c(()=>{16.9.P=\'\'},1K)}28(g,w){7 25=b.26(`#${g}`).27(\'.F-3j\').26(\'.F-r\').1B;E.D({A:w?\'3i\':\'3h\',r:`${25}3g 1T ${w?\'24\':\'23\'}`,J:w?\'1n\':\'3f\',1m:3e,1l:d,22:z,21:\'20-1Z\'})}1Y(){E.D({A:\'1o 1U 3d?\',r:\'3c 1N 3b 3a 39 38\',J:\'37\',14:z,13:\'1o\',12:\'1X\',36:\'#35\'}).11((q)=>{f(q.Z){6.1W()}})}1W(){7 c=b.R(\'.F-Q\');c.L(a=>{a.1i=d;6.c[a.1V]=d});6.1k();E.D({A:\'1o 34\',r:\'1U 1O 33 1T 32\',J:\'1n\',1m:1S,1l:d})}1k(){1Q.31(6.1j,1P.30(6.c))}1R(){7 15=1Q.2Z(6.1j);f(15){6.c=1P.2Y(15);2X.2W(6.c).L(g=>{7 a=b.I(g);f(a){a.1i=6.c[g]}})}}1h(){E.D({A:\'1M 2V?\',r:\'2U 1O 1N 2T 15\',J:\'2S\',14:z,13:\'1M\',12:\'2R\'}).11((q)=>{f(q.Z){7 l=b.I(\'1g\');l.9.P=\'1G 0.1f 1e-1d\';1c(()=>{l.1b.1L(\'1a\');6.Y=d;6.X()},1K)}})}1J(){7 1I=b.R(\'.k\');1I.L((k,2Q)=>{k.9.2P=`${O.N()*3+4}s`;k.9.2O=`${O.N()*2}s`;k.9.2N=`${O.N()*2M}%`;k.9.19=O.N()*0.5+0.2;7 W=O.N()*4+2;k.9.2L=`${W}1H`;k.9.2K=`${W}1H`})}}7 1A=`@2J 1G{2I{19:1;1E:1D(1)1C(0)}1F{19:0;1E:1D(0.8)1C(-2H)}}`;7 9=b.2G(\'9\');9.1B=1A;b.2F.2E(9);b.x(\'1v\',()=>{1y 1z()});2D 1t(){7 j=1y(18.2C||18.2B)();7 G=j.2A();7 M=j.2z();G.1x(M);M.1x(j.2y);G.2x.U=2w;G.2v=\'2u\';M.1w.2t(0.3,j.S);M.1w.2s(0.2r,j.S+0.1);G.2q(j.S);G.2p(j.S+0.1)}b.x(\'1v\',()=>{7 c=b.R(\'.F-Q\');c.L(a=>{a.x(\'1u\',()=>{2o{1t()}2n(e){}})})});', 62, 264, '||||||this|const||style|switchElement|document|switches|false||if|switchId|||audioContext|particle|menu|||||result|text|||||isEnabled|addEventListener||true|title|||fire|Swal|switch|oscillator||getElementById|icon|password|forEach|gainNode|random|Math|animation|input|querySelectorAll|currentTime||value||size|showPasswordPrompt|isAuthenticated|isConfirmed||then|cancelButtonText|confirmButtonText|showCancelButton|saved|switchItem|ng|window|opacity|hidden|classList|setTimeout|out|ease|5s|modMenu|closeMenu|checked|storageKey|saveSettings|showConfirmButton|timer|success|Reset|nh|return|margin|255|playClickSound|change|DOMContentLoaded|gain|connect|new|ModMenu|slideOutKeyframes|textContent|translateY|scale|transform|to|slideOut|px|particles|initParticles|500|add|Close|will|settings|JSON|localStorage|loadSettings|2000|been|All|id|performReset|Cancel|resetAllSettings|end|top|position|toast|disabled|enabled|switchText|querySelector|closest|showSwitchNotification|addSwitchAnimation|handleSwitchChange|click|initEventListeners|showMenu|else|showAccessDenied|Nh|showSuccessMessage|div|color|bottom|class|init|catch|try|stop|start|01|exponentialRampToValueAtTime|setValueAtTime|sine|type|800|frequency|destination|createGain|createOscillator|webkitAudioContext|AudioContext|function|appendChild|head|createElement|50px|from|keyframes|height|width|100|left|animationDelay|animationDuration|index|Stay|question|be|Your|Menu|keys|Object|parse|getItem|stringify|setItem|reset|have|Complete|ff6b6b|confirmButtonColor|warning|functions|mod|all|disable|This|Settings|1500|info|has|Disabled|Enabled|label|in|pulse|none|item|log|console|Escape|key|keydown|target|resetBtn|closeBtn|slideIn|remove|close|Exit|Again|Try|error|access|correct|the|need|You|Denied|Access|Tr|Hu|Th|null|Incorrect|required|is|Password|inputValidator|allowEscapeKey|allowOutsideClick|Enter|inputPlaceholder|kh|rgba|10px|667eea|3rem|font|lock|fa|fas|20px|center|align|html|- NgVanh|PANEL|LOGIN|modMenuSettings|ngvanh|constructor'.split('|'), 0, {}))
+    </script>
+</body>
+
+</html>
